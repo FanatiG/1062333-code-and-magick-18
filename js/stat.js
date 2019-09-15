@@ -16,6 +16,7 @@ window.renderStatistics = function (ctx, names, times) {
   console.log(names);
   console.log(times);
 
+
   for (let i = 0; i < times.length; i++) {
     if (names[i] === 'Вы') {
       ctx.fillStyle = "rgba(255, 0, 0, 1)";
