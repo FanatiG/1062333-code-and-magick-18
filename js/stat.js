@@ -13,8 +13,6 @@ window.renderStatistics = function (ctx, names, times) {
   message.split('\n').forEach(function (str, shift) {
     ctx.fillText(str, 120, 30 + 20 * shift);
   });
-  console.log(names);
-  console.log(times);
 
 
   for (let i = 0; i < times.length; i++) {
