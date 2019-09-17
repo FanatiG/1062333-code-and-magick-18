@@ -10,29 +10,42 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.fillStyle = 'black';
   ctx.textBaseline = 'hanging';
   var message = 'Ура вы победили!\nСписок результатов:';
+  var WINTEXTX = 120;
+  var WINTEXTY = 30;
+  var WINTEXTYSPACE = 20;
   message.split('\n').forEach(function (str, shift) {
-    ctx.fillText(str, 120, 30 + 20 * shift);
+    ctx.fillText(str, WINTEXTX, WINTEXTY + WINTEXTYSPACE * shift);
   });
+  drawScore(ctx, names, times);
+};
 
-
+function drawScore(ctx, names, times) {
+  var RECTX = 150;
+  var RECTXSPACE = 90;
+  var RECTY = 250;
+  var RECTWIDTH = 40;
+  var RECTMAXHEIGHT = 150;
+  var NAMETEXTX = 150;
+  var NAMETEXTY = 255;
+  var NAMETEXTYSPACE = 180;
   for (var i = 0; i < times.length; i++) {
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
-      ctx.fillStyle = setHSL();
+      ctx.fillStyle = setHSL(times, i);
     }
-    ctx.fillRect(150 + 90 * i, 250, 40, -Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * 150);
-    ctx.fillText(names[i], 150 + 180 * i / 2, 255);
+    ctx.fillRect(RECTX + RECTXSPACE * i, RECTY, RECTWIDTH, -Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * RECTMAXHEIGHT);
+    ctx.fillText(names[i], NAMETEXTX + NAMETEXTYSPACE * i / 2, NAMETEXTY);
   }
+}
 
-  function getMaxOfArray(numArray) {
-    return Math.max.apply(null, numArray);
-  }
+function getMaxOfArray(numArray) {
+  return Math.max.apply(null, numArray);
+}
 
-  function setHSL() {
-    var h = 233;
-    var s = Math.floor(Math.random() * 100) + '%';
-    var l = 30 + '%';
-    return 'hsl(' + h + ',' + s + ',' + l + ')';
-  }
-};
+function setHSL(times, i) {
+  var h = 233;
+  var s = Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * 100 + '%';
+  var l = 30 + '%';
+  return 'hsl(' + h + ',' + s + ',' + l + ')';
+}
