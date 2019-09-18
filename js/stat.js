@@ -12,6 +12,8 @@ var RECTMAXHEIGHT = 150;
 var NAMETEXTX = 150;
 var NAMETEXTY = 255;
 var NAMETEXTYSPACE = 180;
+var PLAYERNAME = 'Вы';
+
 window.renderStatistics = function (ctx, names, times) {
   ctx.lineWidth = 5;
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
@@ -29,18 +31,17 @@ window.renderStatistics = function (ctx, names, times) {
 
 function drawScore(ctx, names, times) {
   for (var i = 0; i < times.length; i++) {
-    var chooseColor = (names[i] === 'Вы') ? ctx.fillStyle = 'rgba(255, 0, 0, 1)' : ctx.fillStyle = setHSL(times, i);
+    ctx.fillStyle = (names[i] === PLAYERNAME) ? 'rgba(255, 0, 0, 1)' : getRandomColor(times, i);
     ctx.fillRect(RECTX + RECTXSPACE * i, RECTY, RECTWIDTH, -Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * RECTMAXHEIGHT);
     ctx.fillText(names[i], NAMETEXTX + NAMETEXTYSPACE * i / 2, NAMETEXTY);
   }
-  return chooseColor;
 }
 
 function getMaxOfArray(numArray) {
   return Math.max.apply(null, numArray);
 }
 
-function setHSL(times, i) {
+function getRandomColor(times, i) {
   var h = 233;
   var s = Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * 100 + '%';
   var l = 30 + '%';
