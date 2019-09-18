@@ -1,5 +1,17 @@
 'use strict';
 
+var message = 'Ура вы победили!\nСписок результатов:';
+var WINTEXTX = 120;
+var WINTEXTY = 30;
+var WINTEXTYSPACE = 20;
+var RECTX = 150;
+var RECTXSPACE = 90;
+var RECTY = 250;
+var RECTWIDTH = 40;
+var RECTMAXHEIGHT = 150;
+var NAMETEXTX = 150;
+var NAMETEXTY = 255;
+var NAMETEXTYSPACE = 180;
 window.renderStatistics = function (ctx, names, times) {
   ctx.lineWidth = 5;
   ctx.fillStyle = 'rgba(0,0,0,0.7)';
@@ -9,10 +21,6 @@ window.renderStatistics = function (ctx, names, times) {
   ctx.font = '16px PT Mono';
   ctx.fillStyle = 'black';
   ctx.textBaseline = 'hanging';
-  var message = 'Ура вы победили!\nСписок результатов:';
-  var WINTEXTX = 120;
-  var WINTEXTY = 30;
-  var WINTEXTYSPACE = 20;
   message.split('\n').forEach(function (str, shift) {
     ctx.fillText(str, WINTEXTX, WINTEXTY + WINTEXTYSPACE * shift);
   });
@@ -20,23 +28,12 @@ window.renderStatistics = function (ctx, names, times) {
 };
 
 function drawScore(ctx, names, times) {
-  var RECTX = 150;
-  var RECTXSPACE = 90;
-  var RECTY = 250;
-  var RECTWIDTH = 40;
-  var RECTMAXHEIGHT = 150;
-  var NAMETEXTX = 150;
-  var NAMETEXTY = 255;
-  var NAMETEXTYSPACE = 180;
   for (var i = 0; i < times.length; i++) {
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = setHSL(times, i);
-    }
+    var chooseColor = (names[i] === 'Вы') ? ctx.fillStyle = 'rgba(255, 0, 0, 1)' : ctx.fillStyle = setHSL(times, i);
     ctx.fillRect(RECTX + RECTXSPACE * i, RECTY, RECTWIDTH, -Math.ceil(times[i]) / Math.ceil(getMaxOfArray(times)) * RECTMAXHEIGHT);
     ctx.fillText(names[i], NAMETEXTX + NAMETEXTYSPACE * i / 2, NAMETEXTY);
   }
+  return chooseColor;
 }
 
 function getMaxOfArray(numArray) {
