@@ -43,30 +43,17 @@ element1.classList.remove('hidden');
 var element2 = document.getElementsByClassName('setup-similar')[0];
 element2.classList.remove('hidden');
 
-var objectN1 = {
-  name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
-  coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
-  eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
-};
-var objectN2 = {
-  name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
-  coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
-  eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
-};
-var objectN3 = {
-  name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
-  coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
-  eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
-};
-var objectN4 = {
-  name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
-  coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
-  eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
-};
+var mageVariants = [];
+for (var i = 0; i < 4; i++) {
+  var obj = {
+    name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
+    coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
+    eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
+  };
+  mageVariants[i] = obj;
+}
 
-var mageVariants = [objectN1, objectN2, objectN3, objectN4];
-
-for (var i = 0; i < mageVariants.length; i++) {
+for (i = 0; i < mageVariants.length; i++) {
   var mageOuterDivElement = document.createElement('div');
   mageOuterDivElement.className = 'setup-similar-item';
 
@@ -75,6 +62,8 @@ for (var i = 0; i < mageVariants.length; i++) {
 
   var mageName = document.createElement('p');
   mageName.className = 'setup-similar-label';
+  // eslint-disable-next-line no-console
+  console.log(mageVariants[i]);
   mageName.innerHTML = mageVariants[i].name;
 
   var mageCoat = document.createElement('use');
