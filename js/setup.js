@@ -1,6 +1,6 @@
 'use strict';
 
-var firstNames = [
+var FIRSTNAMES = [
   'Иван',
   'Хуан',
   'Себастьян',
@@ -11,7 +11,7 @@ var firstNames = [
   'Люпита',
   'Вашингтон'
 ];
-var secondNames = [
+var SECONDNAMES = [
   'да Марья',
   'Верон',
   'Мирабелла',
@@ -21,7 +21,7 @@ var secondNames = [
   'Нионго',
   'Ирвинг'
 ];
-var coatColor = [
+var COATCOLORS = [
   'rgb(101, 137, 164)',
   'rgb(241, 43, 107)',
   'rgb(146, 100, 161)',
@@ -29,60 +29,38 @@ var coatColor = [
   'rgb(215, 210, 55)',
   'rgb(0, 0, 0)'
 ];
-var eyesColor = [
+var EYESCOLORS = [
   'black',
   'red',
   'blue',
   'yellow',
   'green'
 ];
-
-var element1 = document.getElementsByClassName('setup')[0];
-element1.classList.remove('hidden');
-
-var element2 = document.getElementsByClassName('setup-similar')[0];
-element2.classList.remove('hidden');
-
 var mageVariants = [];
-var mageQuantity = 4;
-for (var i = 0; i < mageQuantity; i++) {
-  var obj = {
-    name: firstNames[Math.floor(Math.random() * Math.floor(firstNames.length))] + ' ' + secondNames[Math.floor(Math.random() * Math.floor(secondNames.length))],
-    coatColor: coatColor[Math.floor(Math.random() * Math.floor(coatColor.length))],
-    eyesColor: eyesColor[Math.floor(Math.random() * Math.floor(eyesColor.length))]
-  };
-  mageVariants[i] = obj;
+var MAGEQUANTITY = 4;
+var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+
+function generateData() {
+  for (var i = 0; i < MAGEQUANTITY; i++) {
+    var obj = {
+      name: FIRSTNAMES[Math.floor(Math.random() * Math.floor(FIRSTNAMES.length))] + ' ' + SECONDNAMES[Math.floor(Math.random() * Math.floor(SECONDNAMES.length))],
+      coatColor: COATCOLORS[Math.floor(Math.random() * Math.floor(COATCOLORS.length))],
+      eyesColor: EYESCOLORS[Math.floor(Math.random() * Math.floor(EYESCOLORS.length))]
+    };
+    mageVariants[i] = obj;
+  }
 }
 
-for (i = 0; i < mageVariants.length; i++) {
-  var mageOuterDivElement = document.createElement('div');
-  mageOuterDivElement.className = 'setup-similar-item';
-
-  var mageInnerDivElement = document.createElement('div');
-  mageInnerDivElement.className = 'setup-similar-content';
-
-  var mageName = document.createElement('p');
-  mageName.className = 'setup-similar-label';
-  mageName.innerHTML = mageVariants[i].name;
-
-  var mageCoat = document.createElement('use');
-  mageCoat.className = 'wizard-coat';
-  mageCoat.href = '#wizard-coat';
-
-  var mageHead = document.createElement('use');
-  mageHead.className = 'wizard-head';
-  mageHead.href = '#wizard-head';
-
-  var mageEyes = document.createElement('use');
-  mageEyes.className = 'wizard-eyes';
-  mageEyes.href = '#wizard-eyes';
-
-  var mageHands = document.createElement('use');
-  mageHands.className = 'wizard-hands';
-  mageHands.href = '#wizard-hands';
-
-  document.getElementsByClassName('setup-similar-list')[0].appendChild(mageOuterDivElement).appendChild(mageInnerDivElement).innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62 86" class="setup-similar-wizard"><g class="wizard"><use xlink:href="#wizard-coat" class="wizard-coat"></use><use xlink:href="#wizard-head" class="wizard-head"></use><use xlink:href="#wizard-eyes" class="wizard-eyes"></use><use xlink:href="#wizard-hands" class="wizard-hands"></use></g></svg>';
-  document.getElementsByClassName('setup-similar-list')[0].querySelectorAll('.wizard-coat')[i].style.fill = mageVariants[i].coatColor;
-  document.getElementsByClassName('setup-similar-list')[0].querySelectorAll('.wizard-eyes')[i].style.fill = mageVariants[i].eyesColor;
-  document.getElementsByClassName('setup-similar-list')[0].appendChild(mageOuterDivElement).appendChild(mageName);
+function showData() {
+  generateData();
+  document.getElementsByClassName('setup')[0].classList.remove('hidden');
+  document.getElementsByClassName('setup-similar')[0].classList.remove('hidden');
+  for (var i = 0; i < mageVariants.length; i++) {
+    var wizardElement = similarWizardTemplate.cloneNode(true);
+    document.querySelector('.setup-similar-list').appendChild(wizardElement);
+    wizardElement.querySelector('.setup-similar-label').innerHTML = mageVariants[i].name;
+    wizardElement.querySelector('.wizard-coat').style.fill = mageVariants[i].coatColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = mageVariants[i].eyesColor;
+  }
 }
+showData();
