@@ -68,7 +68,6 @@ function renderWizard(wizardElement, mages) {
 
 function showData() {
   var mages = generateData();
-  console.log(mages);
   var fragment = document.createDocumentFragment();
   fragment.cloneNode(true);
   for (var i = 0; i < mages.length; i++) {
