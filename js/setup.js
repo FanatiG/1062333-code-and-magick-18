@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 var FIRST_NAMES = [
@@ -60,20 +59,20 @@ var userModal = document.querySelector('.setup');
 userModal.classList.remove('hidden');
 userModal.querySelector('.setup-similar').classList.remove('hidden');
 
-function renderWizard(wizardElement, mages) {
+function renderWizard(mages) {
+  var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = mages.name;
   wizardElement.querySelector('.wizard-coat').style.fill = mages.coatColor;
   wizardElement.querySelector('.wizard-eyes').style.fill = mages.eyesColor;
+  return wizardElement;
 }
 
 function showData() {
   var mages = generateData();
   var fragment = document.createDocumentFragment();
   fragment.cloneNode(true);
-  for (var i = 0; i < mages.length; i++) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
-    renderWizard(wizardElement, mages[i]);
-    fragment.appendChild(wizardElement);
+  for (var i = 0; i < generateData().length; i++) {
+    fragment.appendChild(renderWizard(mages[i]));
   }
   document.querySelector('.setup-similar-list').appendChild(fragment);
 }
