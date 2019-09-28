@@ -70,8 +70,7 @@ function renderWizard(mages) {
 function showData() {
   var mages = generateData();
   var fragment = document.createDocumentFragment();
-  fragment.cloneNode(true);
-  for (var i = 0; i < generateData().length; i++) {
+  for (var i = 0; i < mages.length; i++) {
     fragment.appendChild(renderWizard(mages[i]));
   }
   document.querySelector('.setup-similar-list').appendChild(fragment);
